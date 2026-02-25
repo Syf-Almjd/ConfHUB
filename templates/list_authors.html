@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+    <div>
+        <h4 style="color: var(--text-secondary); margin-bottom: 0.5rem;">Network</h4>
+        <h1>Contributing Authors</h1>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Affiliation</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div
+                                style="width: 36px; height: 36px; background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: var(--accent-color);">
+                                {{ author[1][0] }}
+                            </div>
+                            <span style="font-weight: 600;">{{ author[1] }}</span>
+                        </div>
+                    </td>
+                    <td style="color: var(--text-secondary); font-weight: 500;">{{ author[2] }}</td>
+                    <td>
+                        <a href="mailto:{{ author[3] }}" style="color: var(--accent-color); text-decoration: none;">
+                            <i class="fa-regular fa-envelope" style="margin-right: 5px; opacity: 0.7;"></i> {{ author[3]
+                            }}
+                        </a>
+                    </td>
+                    <td style="color: var(--text-secondary); font-size: 0.9rem;">{{ author[4] }}</td>
+                    <td>
+                        {% if author[5] == 'Y' %}
+                        <span
+                            style="background: rgba(40, 167, 69, 0.1); color: var(--success); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">CONTACT</span>
+                        {% else %}
+                        <span
+                            style="background: #f8f9fa; color: #999; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">AUTHOR</span>
+                        {% endif %}
+                    </td>
+                    <td style="font-family: monospace; color: var(--text-secondary); font-size: 0.8rem;">{{ author[0] }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 4rem;">
+                        <i class="fa-solid fa-user-slash fa-3x"
+                            style="display: block; margin-bottom: 1rem; opacity: 0.2;"></i>
+                        No authors registered in the system.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

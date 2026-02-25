@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header" style="margin-bottom: 3rem;">
+    <h1>Overview</h1>
+    <p style="color: var(--text-secondary); font-size: 1.1rem;">Welcome back to ConfHub. Here's what's happening today.
+    </p>
+</div>
+
+<div class="stats-grid"
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div
+                style="width: 48px; height: 48px; background: #e9ecef; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                <i class="fa-solid fa-calendar fa-lg"></i>
+            </div>
+            <div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">Conferences</p>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">{{ stats.get('conferences', 0) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div
+                style="width: 48px; height: 48px; background: #e9ecef; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                <i class="fa-solid fa-file-lines fa-lg"></i>
+            </div>
+            <div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">Articles</p>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">{{ stats.get('articles', 0) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div
+                style="width: 48px; height: 48px; background: #e9ecef; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                <i class="fa-solid fa-users fa-lg"></i>
+            </div>
+            <div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">Members</p>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">{{ stats.get('members', 0) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div
+                style="width: 48px; height: 48px; background: #e9ecef; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                <i class="fa-solid fa-hand-holding-dollar fa-lg"></i>
+            </div>
+            <div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">Sponsors</p>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">{{ stats.get('sponsors', 0) }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 700;">Recent Conferences</h2>
+            <a href="{{ url_for('list_conferences') }}" class="btn btn-outline"
+                style="padding: 8px 16px; font-size: 0.9rem;">View All</a>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Acronym</th>
+                        <th>Name</th>
+                        <th>Venue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for conf in recent_conferences %}
+                    <tr>
+                        <td><strong>{{ conf[0] }}</strong></td>
+                        <td>{{ conf[1] }}</td>
+                        <td><span style="color: var(--text-secondary)"><i class="fa-solid fa-location-dot"
+                                    style="margin-right: 5px;"></i> {{ conf[2] }}</span></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 3rem; color: var(--text-secondary);">No
+                            conferences registered yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 0;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Quick Actions</h2>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <a href="{{ url_for('register_conference') }}" class="btn"
+                style="text-align: left; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-plus-circle"></i>
+                Register New Conference
+            </a>
+            <a href="{{ url_for('submit_article') }}" class="btn btn-outline"
+                style="text-align: left; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-upload"></i>
+                Submit Research Article
+            </a>
+            <a href="{{ url_for('assign_reviewer') }}" class="btn btn-outline"
+                style="text-align: left; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-user-check"></i>
+                Assign Peer Reviewer
+            </a>
+            <a href="{{ url_for('view_article_scores') }}" class="btn btn-outline"
+                style="text-align: left; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-chart-simple"></i>
+                Analyze Article Scores
+            </a>
+            <a href="{{ url_for('accepted_articles') }}" class="btn btn-outline"
+                style="text-align: left; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-check-double"></i>
+                Accepted Articles
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

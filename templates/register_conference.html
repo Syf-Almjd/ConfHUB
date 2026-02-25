@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-bottom: 3rem; text-align: center;">
+    <h4
+        style="color: var(--text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">
+        Global Network</h4>
+    <h1>Expand the Horizon</h1>
+    <p style="color: var(--text-secondary); max-width: 500px; margin: 1rem auto;">Register a new scientific conference
+        to the ConfHub ecosystem and manage its academic proceedings.</p>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 0 auto; border-top: 5px solid var(--accent-color);">
+    <form action="{{ url_for('register_conference') }}" method="POST">
+        <div class="form-group">
+            <label for="acronym"><i class="fa-solid fa-tag" style="margin-right: 8px; opacity: 0.5;"></i> Conference
+                Acronym</label>
+            <input type="text" id="acronym" name="acronym" placeholder="e.g. CVPR 2024" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name"><i class="fa-solid fa-font" style="margin-right: 8px; opacity: 0.5;"></i> Full Conference
+                Name</label>
+            <input type="text" id="name" name="name"
+                placeholder="e.g. Conference on Computer Vision and Pattern Recognition" required>
+        </div>
+
+        <div class="form-group">
+            <label for="url"><i class="fa-solid fa-link" style="margin-right: 8px; opacity: 0.5;"></i> Official Website
+                URL</label>
+            <input type="url" id="url" name="url" placeholder="https://example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="venue"><i class="fa-solid fa-location-dot" style="margin-right: 8px; opacity: 0.5;"></i>
+                Location / Venue</label>
+            <input type="text" id="venue" name="venue" placeholder="e.g. Seattle, WA | Virtual" required>
+        </div>
+
+        <div style="margin-top: 3rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn" style="flex: 2; padding: 18px;">
+                Register Conference
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-outline" style="flex: 1; padding: 18px;">
+                Discard
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

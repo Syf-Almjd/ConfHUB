@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h4 style="color: var(--text-secondary); margin-bottom: 0.5rem;">Submissions</h4>
+        <h1>Research Articles</h1>
+    </div>
+    <a href="{{ url_for('submit_article') }}" class="btn">
+        <i class="fa-solid fa-plus-circle"></i> Submit Paper
+    </a>
+</div>
+
+<div class="card" style="padding: 1rem;">
+    <form method="GET" action="{{ url_for('list_articles') }}" style="display: flex; gap: 10px;">
+        <div style="position: relative; flex-grow: 1;">
+            <i class="fa-solid fa-magnifying-glass"
+                style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+            <input type="text" name="q" value="{{ search_query or '' }}" placeholder="Search by title or article ID..."
+                style="padding-left: 45px; background: #f8f9fa;">
+        </div>
+        <button type="submit" class="btn" style="padding: 12px 24px;">Search</button>
+        {% if search_query %}
+        <a href="{{ url_for('list_articles') }}" class="btn btn-outline" style="padding: 12px 24px;">Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Research Area</th>
+                    <th>Status</th>
+                    <th>Published</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for art in articles %}
+                <tr>
+                    <td style="font-weight: 700; color: var(--accent-color);">#{{ art[0] }}</td>
+                    <td style="max-width: 300px; font-weight: 500;">{{ art[1] }}</td>
+                    <td>
+                        <span
+                            style="font-size: 0.8rem; color: var(--text-secondary); background: #f8f9fa; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; text-transform: uppercase;">
+                            {{ art[4]|replace('_', ' ') }}
+                        </span>
+                    </td>
+                    <td style="color: var(--text-secondary); font-size: 0.9rem;">{{ art[5] }}</td>
+                    <td>
+                        <span class="status-badge status-{{ art[2]|lower }}">
+                            {{ art[2]|capitalize }}
+                        </span>
+                    </td>
+                    <td style="text-align: center;">
+                        {% if art[3] == 'Y' %}
+                        <div
+                            style="width: 24px; height: 24px; background: rgba(40, 167, 69, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--success); margin: 0 auto;">
+                            <i class="fa-solid fa-check fa-xs"></i>
+                        </div>
+                        {% else %}
+                        <div
+                            style="width: 24px; height: 24px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa; margin: 0 auto;">
+                            <i class="fa-solid fa-hourglass-start fa-xs"></i>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 4rem;">
+                        <i class="fa-solid fa-box-open fa-3x"
+                            style="display: block; margin-bottom: 1rem; opacity: 0.2;"></i>
+                        No articles found matching your criteria.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

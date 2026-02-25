@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h4 style="color: var(--text-secondary); margin-bottom: 0.5rem;">Explore</h4>
+        <h1>Academic Conferences</h1>
+    </div>
+    <a href="{{ url_for('register_conference') }}" class="btn">
+        <i class="fa-solid fa-plus-circle"></i> New Conference
+    </a>
+</div>
+
+<div class="card" style="padding: 1rem;">
+    <form method="GET" action="{{ url_for('list_conferences') }}" style="display: flex; gap: 10px;">
+        <div style="position: relative; flex-grow: 1;">
+            <i class="fa-solid fa-magnifying-glass"
+                style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+            <input type="text" name="q" value="{{ search_query or '' }}" placeholder="Search by acronym or name..."
+                style="padding-left: 45px; background: #f8f9fa;">
+        </div>
+        <button type="submit" class="btn" style="padding: 12px 24px;">Search</button>
+        {% if search_query %}
+        <a href="{{ url_for('list_conferences') }}" class="btn btn-outline" style="padding: 12px 24px;">Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Acronym</th>
+                    <th>Full Name</th>
+                    <th>Venue</th>
+                    <th>Website</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conf in conferences %}
+                <tr>
+                    <td style="font-weight: 700; color: var(--accent-color);">{{ conf[0] }}</td>
+                    <td style="font-weight: 500;">{{ conf[1] }}</td>
+                    <td>
+                        <i class="fa-solid fa-location-dot"
+                            style="margin-right: 8px; color: var(--text-secondary);"></i>
+                        {{ conf[3] }}
+                    </td>
+                    <td>
+                        <a href="{{ conf[2] }}" target="_blank" class="btn btn-outline"
+                            style="padding: 6px 12px; font-size: 0.8rem;">
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 5px;"></i> Visit
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: var(--text-secondary); padding: 4rem;">
+                        <i class="fa-solid fa-calendar-xmark fa-3x"
+                            style="display: block; margin-bottom: 1rem; opacity: 0.2;"></i>
+                        No conferences found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h4 style="color: var(--text-secondary); margin-bottom: 0.5rem;">Review Process</h4>
+    <h1>Assign Peer Reviewer</h1>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 0 auto; border-left: 4px solid var(--text-primary);">
+    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem;">
+        Select a committee member to evaluate a research submission. Remember that reviewers must organize the target
+        conference and cannot be authors of the assigned paper.
+    </p>
+
+    <form action="{{ url_for('assign_reviewer') }}" method="POST">
+        <div class="form-group">
+            <label for="member_id">Reviewer ID (Member)</label>
+            <div style="position: relative;">
+                <i class="fa-solid fa-user-shield"
+                    style="position: absolute; left: 18px; top: 16px; color: var(--text-secondary);"></i>
+                <input type="text" id="member_id" name="member_id" placeholder="e.g. MEM-007" required
+                    style="padding-left: 50px;">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="article_id">Article ID to Review</label>
+            <div style="position: relative;">
+                <i class="fa-solid fa-file-invoice"
+                    style="position: absolute; left: 18px; top: 16px; color: var(--text-secondary);"></i>
+                <input type="text" id="article_id" name="article_id" placeholder="e.g. ART-101" required
+                    style="padding-left: 50px;">
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn" style="width: 100%;">
+                Assign Mission
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
