@@ -1,8 +1,5 @@
 -- ---------------------------------------------------------------
 -- Sample Data for ConferenceHub
--- Reflects updated schema: is_organizer, phone/is_contact_author on Author,
--- funding_date on Sponsor, category + research_area on Article.
--- No ResearchArea table, no IndustrialPaper table.
 -- ---------------------------------------------------------------
 
 -- Conferences
